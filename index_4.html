@@ -1,0 +1,587 @@
+<title>Yiru Clare Zhu</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,500&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+<style>
+  /* ---------------------------------------------------------
+     Tokens
+  --------------------------------------------------------- */
+  :root {
+    --paper:      #F1F3F6;
+    --surface:    #FBFCFD;
+    --ink:        #171B22;
+    --ink-soft:   #4E5A6B;
+    --ink-faint:  #8993A3;
+    --line:       #C9D0DA;
+    --line-soft:  #DEE3EA;
+    --accent:     #2955A3;
+    --accent-ink: #1D3E7D;
+    --accent-tint:#DDE7F5;
+
+    --font-display: "Fraunces", Georgia, "Times New Roman", serif;
+    --font-body:    "IBM Plex Sans", -apple-system, "Segoe UI", sans-serif;
+    --font-mono:    "IBM Plex Mono", "SF Mono", Consolas, monospace;
+
+    --measure: 62ch;
+    --radius: 3px;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --paper:      #12161C;
+      --surface:    #171C24;
+      --ink:        #E4E8EF;
+      --ink-soft:   #96A2B5;
+      --ink-faint:  #5C6779;
+      --line:       #262E3A;
+      --line-soft:  #1F2530;
+      --accent:     #6E9EE8;
+      --accent-ink: #A9C6F5;
+      --accent-tint:#1B2836;
+    }
+  }
+
+  :root[data-theme="dark"] {
+    --paper:      #14181A;
+    --surface:    #191F1C;
+    --ink:        #E7E9E1;
+    --ink-soft:   #9BA89F;
+    --ink-faint:  #626E67;
+    --line:       #2B332E;
+    --line-soft:  #232A25;
+    --accent:     #DFA164;
+    --accent-ink: #F0C393;
+    --accent-tint:#2A2119;
+  }
+
+  /* ---------------------------------------------------------
+     Base
+  --------------------------------------------------------- */
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    * { animation: none !important; transition: none !important; }
+  }
+
+  body {
+    margin: 0;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--font-body);
+    font-size: 16px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  a { color: inherit; }
+  h1, h2, h3 { font-family: var(--font-display); text-wrap: balance; margin: 0; }
+
+  .mono {
+    font-family: var(--font-mono);
+    letter-spacing: 0.02em;
+  }
+
+  .label {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+  }
+
+  ::selection { background: var(--accent-tint); color: var(--accent-ink); }
+
+  /* ---------------------------------------------------------
+     Shell / grid
+  --------------------------------------------------------- */
+  .shell {
+    max-width: 1120px;
+    margin: 0 auto;
+    padding: 0 clamp(20px, 5vw, 56px);
+    display: grid;
+    grid-template-columns: 180px minmax(0, 1fr);
+    gap: clamp(24px, 5vw, 64px);
+  }
+
+  @media (max-width: 780px) {
+    .shell { grid-template-columns: 1fr; }
+  }
+
+  nav.rail {
+    position: sticky;
+    top: 48px;
+    align-self: start;
+    padding-top: 6px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  @media (max-width: 780px) {
+    nav.rail {
+      position: static;
+      flex-direction: row;
+      flex-wrap: wrap;
+      gap: 4px 16px;
+      padding-top: 0;
+      margin-bottom: 8px;
+    }
+  }
+
+  nav.rail a {
+    font-family: var(--font-mono);
+    font-size: 0.74rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    text-decoration: none;
+    color: var(--ink-faint);
+    border-left: 2px solid transparent;
+    padding-left: 10px;
+    transition: color 0.15s ease, border-color 0.15s ease;
+  }
+  nav.rail a:hover, nav.rail a:focus-visible { color: var(--accent); border-color: var(--accent); }
+  @media (max-width: 780px) {
+    nav.rail a { border-left: none; padding-left: 0; border-bottom: 2px solid transparent; padding-bottom: 2px; }
+  }
+
+  main { min-width: 0; padding-bottom: 80px; }
+
+  section { padding-top: 56px; }
+  section:first-of-type { padding-top: 0; }
+
+  .rule { border: none; border-top: 1px solid var(--line); margin: 0 0 40px; }
+
+  /* ---------------------------------------------------------
+     Hero
+  --------------------------------------------------------- */
+  .hero {
+    position: relative;
+    padding: clamp(56px, 9vw, 92px) clamp(20px, 5vw, 56px) 64px;
+    background-image:
+      linear-gradient(var(--line-soft) 1px, transparent 1px),
+      linear-gradient(90deg, var(--line-soft) 1px, transparent 1px);
+    background-size: 34px 34px;
+    background-position: center top;
+    -webkit-mask-image: linear-gradient(to bottom, black 55%, transparent 100%);
+            mask-image: linear-gradient(to bottom, black 55%, transparent 100%);
+    border-bottom: 1px solid var(--line);
+  }
+  .hero-inner {
+    max-width: 1120px;
+    margin: 0 auto;
+  }
+
+  .eyebrow {
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    color: var(--accent);
+    letter-spacing: 0.04em;
+    margin-bottom: 18px;
+  }
+
+  h1.name {
+    font-size: clamp(2.6rem, 6vw, 4.1rem);
+    font-weight: 500;
+    line-height: 1.02;
+    letter-spacing: -0.01em;
+  }
+
+  .signature {
+    margin-top: 18px;
+    font-family: var(--font-mono);
+    font-size: clamp(0.92rem, 2vw, 1.05rem);
+    color: var(--ink-soft);
+  }
+  .signature .k { color: var(--accent); }
+
+  .bio {
+    margin-top: 26px;
+    max-width: var(--measure);
+    font-size: 1.08rem;
+    color: var(--ink-soft);
+  }
+
+  .contact-row {
+    margin-top: 32px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px 14px;
+  }
+
+  .pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    font-family: var(--font-mono);
+    font-size: 0.82rem;
+    padding: 8px 14px;
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    background: var(--surface);
+    text-decoration: none;
+    color: var(--ink);
+    transition: border-color 0.15s ease, color 0.15s ease;
+  }
+  .pill:hover, .pill:focus-visible { border-color: var(--accent); color: var(--accent-ink); }
+  .pill svg { width: 14px; height: 14px; flex: none; }
+
+  /* ---------------------------------------------------------
+     Section headers
+  --------------------------------------------------------- */
+  .section-head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 16px;
+    margin-bottom: 28px;
+  }
+  h2.section-title {
+    font-size: 1.5rem;
+    font-weight: 500;
+  }
+
+  /* ---------------------------------------------------------
+     Entry (experience / project) cards
+  --------------------------------------------------------- */
+  .entry {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 6px;
+    padding: 26px 0;
+    border-top: 1px solid var(--line-soft);
+  }
+  .entry:first-child { border-top: none; padding-top: 0; }
+
+  .entry-head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 8px 20px;
+  }
+
+  .entry-title {
+    font-family: var(--font-display);
+    font-size: 1.22rem;
+    font-weight: 500;
+  }
+  .entry-org {
+    color: var(--ink-soft);
+  }
+
+  .entry-meta {
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    color: var(--ink-faint);
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+  }
+
+  .entry-role {
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    color: var(--accent);
+    letter-spacing: 0.02em;
+    margin-top: 2px;
+  }
+
+  ul.bullets {
+    margin: 12px 0 0;
+    padding-left: 1.15em;
+    max-width: var(--measure);
+  }
+  ul.bullets li {
+    margin: 7px 0;
+    color: var(--ink-soft);
+  }
+  ul.bullets li::marker { color: var(--accent); }
+
+  .stack-line {
+    margin-top: 10px;
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    color: var(--ink-faint);
+  }
+
+  /* ---------------------------------------------------------
+     Education
+  --------------------------------------------------------- */
+  .edu-card {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 8px 20px;
+    align-items: baseline;
+  }
+  .edu-school { font-family: var(--font-display); font-size: 1.22rem; font-weight: 500; }
+  .edu-detail { color: var(--ink-soft); margin-top: 4px; }
+
+  /* ---------------------------------------------------------
+     Skill matrix
+  --------------------------------------------------------- */
+  .matrix {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    overflow: hidden;
+    background: var(--line-soft);
+    gap: 1px;
+  }
+  .cell {
+    background: var(--surface);
+    padding: 13px 14px;
+    font-family: var(--font-mono);
+    font-size: 0.84rem;
+  }
+  .cell.head {
+    background: var(--paper);
+    color: var(--ink-faint);
+    font-size: 0.68rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  .cert-list { display: flex; flex-direction: column; gap: 16px; margin-top: 28px; }
+  .cert {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 4px 20px;
+    padding: 16px 18px;
+    background: var(--surface);
+    border: 1px solid var(--line-soft);
+    border-radius: var(--radius);
+    border-left: 2px solid var(--accent);
+  }
+  .cert-name { font-weight: 500; }
+  .cert-issuer { grid-column: 1; color: var(--ink-soft); font-size: 0.92rem; }
+  .cert-status {
+    grid-column: 2; grid-row: 1 / span 2; align-self: center;
+    font-family: var(--font-mono); font-size: 0.72rem;
+    color: var(--ink-faint); text-align: right; white-space: nowrap;
+  }
+  .cert-status.progress { color: var(--accent); }
+
+  .tool-groups { display: flex; flex-direction: column; gap: 14px; margin-top: 32px; }
+  .tool-row { display: flex; gap: 16px; }
+  .tool-row .label { flex: none; width: 128px; padding-top: 2px; }
+  .tool-row .vals { color: var(--ink-soft); }
+
+  /* ---------------------------------------------------------
+     Footer
+  --------------------------------------------------------- */
+  footer {
+    border-top: 1px solid var(--line);
+    margin-top: 24px;
+    padding: 32px clamp(20px, 5vw, 56px) 48px;
+  }
+  .footer-inner {
+    max-width: 1120px;
+    margin: 0 auto;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 16px;
+    align-items: center;
+  }
+  .footer-note { color: var(--ink-faint); font-size: 0.85rem; }
+</style>
+
+<div class="hero">
+  <div class="hero-inner">
+    <div class="eyebrow mono">Portfolio — Est. 2026</div>
+    <h1 class="name">Yiru Clare Zhu</h1>
+    <div class="signature mono">Zhu&nbsp;:&nbsp;<span class="k">Systems</span>&nbsp;×&nbsp;<span class="k">Quant</span>&nbsp;→&nbsp;Products</div>
+    <p class="bio">
+      Math of Computation student at UCLA building at the intersection of compilers and quantitative finance.
+      Currently designing <strong>Rix</strong>, a statically-typed matrix DSL for quant workflows &mdash; with hands-on
+      experience spanning compiler pipelines, LLM-based classification systems, and low-latency trading infrastructure.
+    </p>
+    <div class="contact-row">
+      <a class="pill" href="mailto:yiruclarezhu@g.ucla.edu">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>
+        yiruclarezhu@g.ucla.edu
+      </a>
+      <a class="pill" href="https://github.com/yiclzh" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.58 2 12.25c0 4.53 2.87 8.37 6.84 9.73.5.1.68-.22.68-.5v-1.75c-2.78.62-3.37-1.37-3.37-1.37-.46-1.2-1.11-1.52-1.11-1.52-.91-.64.07-.63.07-.63 1 .07 1.53 1.05 1.53 1.05.9 1.57 2.34 1.12 2.91.86.09-.66.35-1.12.64-1.38-2.22-.26-4.56-1.14-4.56-5.05 0-1.12.39-2.03 1.03-2.75-.1-.26-.45-1.3.1-2.72 0 0 .84-.28 2.75 1.05a9.3 9.3 0 0 1 5 0c1.9-1.33 2.75-1.05 2.75-1.05.55 1.42.2 2.46.1 2.72.64.72 1.03 1.63 1.03 2.75 0 3.92-2.34 4.78-4.57 5.04.36.32.68.94.68 1.9v2.82c0 .28.18.61.69.5A10.25 10.25 0 0 0 22 12.25C22 6.58 17.52 2 12 2Z"/></svg>
+        github.com/yiclzh
+      </a>
+      <span class="pill" style="cursor:default;">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+        San Francisco / Los Angeles, CA
+      </span>
+    </div>
+  </div>
+</div>
+
+<div class="shell">
+  <nav class="rail">
+    <a href="#experience">Experience</a>
+    <a href="#projects">Projects</a>
+    <a href="#education">Education</a>
+    <a href="#skills">Skills</a>
+    <a href="#certifications">Certifications</a>
+  </nav>
+
+  <main>
+    <section id="experience">
+      <div class="section-head">
+        <h2 class="section-title">Experience</h2>
+        <span class="label">2026 —</span>
+      </div>
+
+      <div class="entry">
+        <div class="entry-head">
+          <div>
+            <span class="entry-title">Rix</span>
+            <span class="entry-org">— statically-typed matrix DSL for quantitative finance</span>
+            <div class="entry-role">Founder · San Francisco, CA</div>
+          </div>
+          <div class="entry-meta">JUN 2026 — PRESENT</div>
+        </div>
+        <ul class="bullets">
+          <li>Designed and implemented a domain-specific language with a nominal type system layered on shape-checked matrices.</li>
+          <li>Built the full compiler pipeline in C++: tokenizer, recursive parser, type checker, and code generator.</li>
+          <li>Wrote 8 automated tests covering every compiler stage in isolation and end-to-end, catching and fixing real bugs through integration testing.</li>
+        </ul>
+        <div class="stack-line">C++ · compiler design · type systems</div>
+      </div>
+
+      <div class="entry">
+        <div class="entry-head">
+          <div>
+            <span class="entry-title">A*AI</span>
+            <div class="entry-role">Intern · Remote, SF</div>
+          </div>
+          <div class="entry-meta">AUG 2026 — SEP 2026</div>
+        </div>
+        <ul class="bullets">
+          <li>Built a full-stack service that classifies student responses (no attempt / partial / genuine attempt), preventing students from bypassing prompts with no effort.</li>
+          <li>Designed an LLM-based text classifier using structured JSON outputs to reliably parse and detect evasion tactics from free-text model responses.</li>
+          <li>Implemented a confidence-gated grading pipeline: attempts graded against a mark scheme only above a configurable confidence threshold, with fail-safe defaults.</li>
+        </ul>
+        <div class="stack-line">full-stack · LLM classification · structured outputs</div>
+      </div>
+    </section>
+
+    <section id="projects">
+      <div class="section-head">
+        <h2 class="section-title">Projects</h2>
+      </div>
+
+      <div class="entry">
+        <div class="entry-head">
+          <div>
+            <span class="entry-title">Order Book</span>
+            <div class="entry-role">OCaml</div>
+          </div>
+          <div class="entry-meta">JUL 2026 — PRESENT</div>
+        </div>
+        <ul class="bullets">
+          <li>Built a limit order book matching engine implementing price-time priority matching, partial fills, and order cancellation, backed by a Map-based book structure and FIFO price levels.</li>
+          <li>Benchmarked matching engine throughput at <strong class="mono">~365K orders/sec</strong> under realistic multi-price-level order flow via a custom order-flow simulator, single-threaded and in-memory.</li>
+          <li>Wrote property-based tests verifying quantity conservation across randomized order flow.</li>
+        </ul>
+        <div class="stack-line">OCaml · Map-based order book · property-based testing</div>
+      </div>
+
+      <div class="entry">
+        <div class="entry-head">
+          <div>
+            <span class="entry-title">SafeBand</span>
+            <span class="entry-org">— wearable assistive device for the Deaf community</span>
+            <div class="entry-role">C++, Python</div>
+          </div>
+          <div class="entry-meta">AUG 2025 — MAY 2026</div>
+        </div>
+        <ul class="bullets">
+          <li>Designed and built three wearable prototypes providing real-time audio-to-haptic alerts for deaf and hard of hearing drivers.</li>
+          <li>Trained machine learning models using Python and Matplotlib to classify high-priority emergency sounds (sirens, police, ambulances).</li>
+          <li>Engineered embedded hardware using Raspberry Pi and Arduino integrated with haptic vibration motors and sensors to deliver localized vibration alerts upon sound detection.</li>
+        </ul>
+        <div class="stack-line">C++ · Python · Raspberry Pi · Arduino · embedded ML</div>
+      </div>
+    </section>
+
+    <section id="education">
+      <div class="section-head">
+        <h2 class="section-title">Education</h2>
+      </div>
+      <div class="entry">
+        <div class="edu-card">
+          <div>
+            <div class="edu-school">University of California, Los Angeles</div>
+            <div class="edu-detail">B.S., Math of Computation &middot; Minor in Statistics and Data Science</div>
+          </div>
+          <div class="entry-meta">SEP 2026 — JUN 2030</div>
+        </div>
+        <div class="stack-line">Los Angeles, CA · GPA: incoming</div>
+      </div>
+    </section>
+
+    <section id="skills">
+      <div class="section-head">
+        <h2 class="section-title">Skills</h2>
+      </div>
+
+      <div class="label" style="margin-bottom:10px;">Languages</div>
+      <div class="matrix">
+        <div class="cell">Java</div>
+        <div class="cell">Python</div>
+        <div class="cell">C / C++</div>
+        <div class="cell">OCaml</div>
+        <div class="cell">JavaScript</div>
+        <div class="cell">HTML / CSS</div>
+        <div class="cell">SQL</div>
+      </div>
+
+      <div class="tool-groups">
+        <div class="tool-row">
+          <span class="label">Dev Tools</span>
+          <span class="vals">Git, VS Code, Visual Studio, PyCharm, IntelliJ</span>
+        </div>
+        <div class="tool-row">
+          <span class="label">Libraries</span>
+          <span class="vals">pandas, NumPy, Matplotlib</span>
+        </div>
+      </div>
+    </section>
+
+    <section id="certifications">
+      <div class="section-head">
+        <h2 class="section-title">Certifications</h2>
+      </div>
+
+      <div class="cert-list">
+        <div class="cert">
+          <div class="cert-name">Machine Learning Specialization</div>
+          <div class="cert-issuer">DeepLearning.AI, via Coursera</div>
+          <div class="cert-status progress">IN PROGRESS<br>EXP. SEP 2026</div>
+        </div>
+        <div class="cert">
+          <div class="cert-name">Algorithms, Part I &amp; Part II</div>
+          <div class="cert-issuer">Princeton University, via Coursera</div>
+          <div class="cert-status">COMPLETE</div>
+        </div>
+        <div class="cert">
+          <div class="cert-name">Build a Modern Computer from First Principles (Nand to Tetris)</div>
+          <div class="cert-issuer">Hebrew University of Jerusalem, via Coursera</div>
+          <div class="cert-status">COMPLETE</div>
+        </div>
+        <div class="cert">
+          <div class="cert-name">PostgreSQL for Everybody Specialization</div>
+          <div class="cert-issuer">University of Michigan, via Coursera &mdash; Database Design &amp; Basic SQL, Intermediate PostgreSQL, JSON &amp; NLP in PostgreSQL, Database Architecture / Scale / noSQL with Elasticsearch</div>
+          <div class="cert-status">COMPLETE</div>
+        </div>
+      </div>
+    </section>
+  </main>
+</div>
+
+<footer>
+  <div class="footer-inner">
+    <span class="footer-note mono">Built from resume data · Yiru Clare Zhu © 2026</span>
+    <a class="pill" href="mailto:yiruclarezhu@g.ucla.edu">Get in touch →</a>
+  </div>
+</footer>
